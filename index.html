@@ -28,12 +28,12 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
+            max-width: 500px;
+            margin-bottom: 30px;
         }
 
         .logos img {
-            width: 50px; /* Adjust size as needed */
+            width: 100px; /* Increased size */
             height: auto;
         }
 
@@ -151,7 +151,7 @@
             }
 
             .logos {
-                margin-bottom: 150px;
+                margin-bottom: 250px;
             }
         }
     </style>
@@ -181,17 +181,23 @@
         let spinBtn = document.querySelector('.spinBtn');
         let tokenDisplay = document.querySelector('.token');
         let value = Math.ceil(Math.random() * 3600);
-        let serialNumber = 1000;
+        
+        function generateToken() {
+            const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generates a unique token part
+            return "SEW-" + randomPart;
+        }
 
         spinBtn.onclick = function() {
             wheel.style.transform = "rotate(" + value + "deg)";
             value += Math.ceil(Math.random() * 3600);
             
-            // Generate token
-            let token = "SEW-" + serialNumber;
-            serialNumber++;
-            tokenDisplay.textContent = "Token: " + token;
+            // Generate a new token every time the spin button is clicked
+            let newToken = generateToken();
+            tokenDisplay.textContent = "Token: " + newToken;
         }
+
+        // Generate a token immediately when the page loads
+        tokenDisplay.textContent = "Token: " + generateToken();
     </script>
 </body>
 </html>
