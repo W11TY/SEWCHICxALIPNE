@@ -22,18 +22,19 @@
             background-size: cover;
             flex-direction: column;
             padding: 10px;
+            position: relative;
         }
 
         .logos {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            max-width: 500px;
-            margin-bottom: 30px;
+            max-width: 400px;
+            margin-bottom: 20px;
         }
 
         .logos img {
-            width: 100px; /* Increased size */
+            width: 80px; /* Increased size */
             height: auto;
         }
 
@@ -45,6 +46,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 80px; /* Ensure there's space for token */
         }
         
         .spinBtn {
@@ -116,12 +118,15 @@
             text-shadow: 3px 5px 2px rgba(0, 0, 0, 0.15);
             text-align: center;
         }
-        
+
         .token {
-            margin-top: 20px;
             font-size: 1.2em;
             font-weight: 600;
             color: #d63e92;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         @media (max-width: 480px) {
@@ -129,6 +134,7 @@
                 width: 100%;
                 max-width: 350px;
                 height: 350px;
+                margin-bottom: 60px; /* Adjusted space for token */
             }
 
             .spinBtn {
@@ -151,13 +157,13 @@
             }
 
             .logos {
-                margin-bottom: 250px;
+                margin-bottom: 150px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+        <div class="container">
         <div class="spinBtn">Spin</div>
         <div class="wheel">
             <div class="number" style="--i:1;--clr:#ff4d6d"><span>Free Coffee</span></div>
@@ -177,23 +183,17 @@
         let spinBtn = document.querySelector('.spinBtn');
         let tokenDisplay = document.querySelector('.token');
         let value = Math.ceil(Math.random() * 3600);
-        
-        function generateToken() {
-            const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generates a unique token part
-            return "SEW-" + randomPart;
-        }
+        let serialNumber = Math.floor(Math.random() * 9000) + 1000; // Generate different serial number on each page load
 
         spinBtn.onclick = function() {
             wheel.style.transform = "rotate(" + value + "deg)";
             value += Math.ceil(Math.random() * 3600);
             
-            // Generate a new token every time the spin button is clicked
-            let newToken = generateToken();
-            tokenDisplay.textContent = "Token: " + newToken;
+            // Generate a new token with a unique serial number each time
+            let token = "SEW-" + serialNumber;
+            serialNumber = Math.floor(Math.random() * 9000) + 1000; // Update serial number for next token
+            tokenDisplay.textContent = "Token: " + token;
         }
-
-        // Generate a token immediately when the page loads
-        tokenDisplay.textContent = "Token: " + generateToken();
     </script>
 </body>
 </html>
