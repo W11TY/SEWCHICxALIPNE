@@ -46,7 +46,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 80px; /* Ensure there's space for token */
+            margin-bottom: 60px; /* Adjusted space for token */
         }
         
         .spinBtn {
@@ -124,7 +124,7 @@
             font-weight: 600;
             color: #d63e92;
             position: absolute;
-            bottom: 180px;
+            bottom: 180px; /* Shifted token above */
             left: 50%;
             transform: translateX(-50%);
         }
@@ -154,6 +154,7 @@
 
             .token {
                 font-size: 1em;
+                bottom: 30px; /* Shifted token above for mobile */
             }
 
             .logos {
@@ -163,7 +164,8 @@
     </style>
 </head>
 <body>
-        <div class="container">
+    
+    <div class="container">
         <div class="spinBtn">Spin</div>
         <div class="wheel">
             <div class="number" style="--i:1;--clr:#ff4d6d"><span>Free Coffee</span></div>
@@ -185,6 +187,17 @@
         let value = Math.ceil(Math.random() * 3600);
         let serialNumber = Math.floor(Math.random() * 9000) + 1000; // Generate different serial number on each page load
 
+        const rewards = [
+            "Free Coffee",
+            "Hot Choc Free on ₹599",
+            "10% Off",
+            "Better Luck Next Time",
+            "₹100 Cashback",
+            "Free Dessert",
+            "Buy 1 Get 1",
+            "Exclusive Gift"
+        ];
+
         spinBtn.onclick = function() {
             wheel.style.transform = "rotate(" + value + "deg)";
             value += Math.ceil(Math.random() * 3600);
@@ -192,7 +205,17 @@
             // Generate a new token with a unique serial number each time
             let token = "SEW-" + serialNumber;
             serialNumber = Math.floor(Math.random() * 9000) + 1000; // Update serial number for next token
+            
+            // Randomly choose a reward based on the wheel's current position
+            let rewardIndex = Math.floor((value % 360) / (360 / rewards.length));
+            let reward = rewards[rewardIndex];
+            
             tokenDisplay.textContent = "Token: " + token;
+
+            // Wait for the spin animation to finish before showing the alert
+            wheel.addEventListener('transitionend', function() {
+                alert("Congratulations! You won: " + reward + "\nYour token number: " + token);
+            });
         }
     </script>
 </body>
