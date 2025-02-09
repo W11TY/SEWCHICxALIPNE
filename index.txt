@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Wheel of Fortune</title>
+    <style>
+        body {
+            background-color: #f8e0ff; /* Light lavender/pink */
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        #wheelContainer {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        #wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                from 0deg at 50% 50%,
+                #f77062, #fe5196, #ff7979, #f77062 /* Example colors - customize! */
+            );
+            transition: transform 3s ease-in-out; /* Smooth spin */
+        }
+
+        .segment {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em; /* Adjust as needed */
+            color: white; /* Or a color that contrasts well */
+            pointer-events: none; /* Prevent clicking segments */
+        }
+
+        #pointer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(180deg); /* Pointing down */
+            width: 50px;
+            height: 50px;
+            background-image: url('pointer.png'); /* Replace with your pointer image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 1; /* Ensure it's on top */
+        }
+
+        #spinButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #fe5196; /* Example color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Valentine's Wheel of Fortune</h1>
+
+    <div id="wheelContainer">
+        <div id="wheel">
+            <div class="segment" style="transform: rotate(0deg);">❤️ Discount</div>
+            <div class="segment" style="transform: rotate(60deg);">🌹 Flowers</div>
+            <div class="segment" style="transform: rotate(120deg);">🍫 Chocolates</div>
+            <div class="segment" style="transform: rotate(180deg);">💌 Card</div>
+            <div class="segment" style="transform: rotate(240deg);">💖 Hugs</div>
+            <div class="segment" style="transform: rotate(300deg);">🎁 Gift</div>
+        </div>
+        <div id="pointer"></div>
+    </div>
+
+    <button id="spinButton">Spin!</button>
+    <div id="result"></div>
+
+    <script>
+        const wheel = document.getElementById('wheel');
+        const spinButton = document.getElementById('spinButton');
+        const result = document.getElementById('result');
+        const segments = document.querySelectorAll('.segment');
+
+        const rewards = [
+          "❤️ Discount!",
+          "🌹 Flowers!",
+          "🍫 Chocolates!",
+          "💌 Card!",
+          "💖 Hugs!",
+          "🎁 Gift!"
+        ];
+
+        spinButton.addEventListener('click', () => {
+            const randomDegree = Math.floor(Math.random() * 3600) + 720; // Ensure at least 2 full spins
+
+            wheel.style.transition = 'transform 3s ease-in-out'; // Reset transition
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+
+            setTimeout(() => {
+                const actualDegree = randomDegree % 360;
+                const segmentIndex = Math.floor(actualDegree / 60); // 6 segments, each 60 degrees
+
+                const chosenReward = rewards[segmentIndex];
+                result.textContent = `You won: ${chosenReward}`;
+
+                wheel.style.transition = 'none'; // Disable transition for next spin
+            }, 3000); // Match transition time
+
+        });
+    </script>
+
+</body>
+</html>
