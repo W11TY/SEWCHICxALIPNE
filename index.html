@@ -124,9 +124,35 @@
             font-weight: 600;
             color: #d63e92;
             position: absolute;
-            bottom: 180px; /* Shifted token above */
+            bottom: 40px; /* Shifted token above */
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        .marquee {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            background: rgba(214, 62, 146, 0.8);
+            color: #fff;
+            font-weight: 600;
+            padding: 10px 0;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+        @keyframes marquee {
+            from {
+                transform: translateX(0%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
         }
 
         @media (max-width: 480px) {
@@ -168,18 +194,22 @@
     <div class="container">
         <div class="spinBtn">Spin</div>
         <div class="wheel">
-           <div class="number" style="--i:1;--clr:#ff4d6d"><span>SURPRISE 1</span></div>
-            <div class="number" style="--i:2;--clr:#ff85a1"><span>SURPRISE 2</span></div>
-            <div class="number" style="--i:3;--clr:#ff6b81"><span>SURPRISE 3</span></div>
-            <div class="number" style="--i:4;--clr:#ff4757"><span>SURPRISE 4</span></div>
-            <div class="number" style="--i:5;--clr:#ff99ac"><span>SURPRISE 5</span></div>
-            <div class="number" style="--i:6;--clr:#ff4d6d"><span>SURPRISE 6</span></div>
-            <div class="number" style="--i:7;--clr:#ff6b81"><span>SURPRISE 7</span></div>
-            <div class="number" style="--i:8;--clr:#ff85a1"><span>SURPRISE 8</span></div>
+            <div class="number" style="--i:1;--clr:#ff4d6d"><span>SURPRISE 1</span></div>
+            <div class="number" style="--i:2;--clr:#ff85a1"><span>SURPRISE 4</span></div>
+            <div class="number" style="--i:3;--clr:#ff6b81"><span>SURPRISE 5</span></div>
+            <div class="number" style="--i:4;--clr:#ff4757"><span>SURPRISE 6</span></div>
+            <div class="number" style="--i:5;--clr:#ff99ac"><span>SURPRISE 7</span></div>
+            <div class="number" style="--i:6;--clr:#ff4d6d"><span>SURPRISE 8</span></div>
+            <div class="number" style="--i:7;--clr:#ff6b81"><span>SURPRISE 9</span></div>
+            <div class="number" style="--i:8;--clr:#ff85a1"><span>SURPRISE 10</span></div>
         </div>
     </div>
-    <div class="token">Token: SEWCHIC-XXXX</div>
+    <div class="token">Token: SEW-XXXX</div>
     
+    <div class="marquee">
+        <span>🎉 Spin & Win Exciting SURPRISES with SEWCHIC X Alpine Espresso! Happy Valentine's Day!💖 <b> THE TOKEN WILL ONLY  BE VALID WHEN GENERATED INSIDE THE CAFE!</b></span>
+    </div>
+
     <script>
         let wheel = document.querySelector('.wheel');
         let spinBtn = document.querySelector('.spinBtn');
@@ -203,7 +233,7 @@
             value += Math.ceil(Math.random() * 3600);
             
             // Generate a new token with a unique serial number each time
-            let token = "SEWCHIC-" + serialNumber;
+            let token = "SEW-" + serialNumber;
             serialNumber = Math.floor(Math.random() * 9000) + 1000; // Update serial number for next token
             
             // Randomly choose a reward based on the wheel's current position
